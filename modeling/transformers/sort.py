@@ -58,9 +58,15 @@ class SortTransformer:
         if not self._has_valid_fieldnames():
             raise InvalidFieldName(f"One of {self._sort_fields!r} "
                                    "is not a valid column name.")
-        sql = "{input_sql} ORDER BY {orderby_clause}"
+
+        input_sql = self.input_.transform()
+        has_orderby = " ORDER BY " in input_sql
+        query_joiner = "," if has_orderby else "ORDER BY"
+
+        sql = "{input_sql} {query_joiner} {orderby_clause}"
 
         return sql.format(
-            input_sql=self.input_.transform(),
+            input_sql=input_sql,
+            query_joiner=query_joiner,
             orderby_clause=self._gen_orderby_clause(),
         )

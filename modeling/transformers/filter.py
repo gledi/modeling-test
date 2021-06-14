@@ -78,9 +78,14 @@ class FilterTransformer:
             raise InvalidFieldName(f"{self.transform_object.field_name!r} "
                                    "is not a valid column name.")
 
-        sql = "{input_sql} WHERE {ops}"
+        input_sql = self.input_.transform()
+        has_where_clause = " WHERE " in input_sql
+        query_joiner = "AND" if has_where_clause else "WHERE"
+
+        sql = "{input_sql} {query_joiner} {ops}"
 
         return sql.format(
-            input_sql=self.input_.transform(),
+            input_sql=input_sql,
+            query_joiner=query_joiner,
             ops=self._gen_where_clause(),
         )
