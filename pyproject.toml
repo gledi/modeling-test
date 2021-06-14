@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "modeling-test"
+version = "0.1.0"
+description = ""
+authors = ["Gledi Caushaj <gledi.alb@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+PyMySQL = "^1.0.2"
+Flask = "^2.0.1"
+pydantic = "^1.8.2"
+python-dotenv = "^0.17.1"
+cryptography = "^3.4.7"
+
+[tool.poetry.dev-dependencies]
+ipython = "^7.24.1"
+flake8 = "^3.9.2"
+mypy = "^0.902"
+pytest = "^6.2.4"
+coverage = "^5.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
