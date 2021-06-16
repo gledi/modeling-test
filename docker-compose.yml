@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        expose:
+            - 5000
+        ports:
+            - 5000:5000
+        environment:
+            - FLASK_ENV=production
+            - FLASK_APP=wsgi.py
+            - SECRET_KEY=7B2KkjyLUf16XTovI8wGrBxyaXFA1wJ1qaMRlsR-lOBJgta7JdDMZv-d2pU0GRun
+            - DATABASE_HOST=db
+            - DATABASE_PORT=3306
+            - DATABASE_USER=modeler
+            - DATABASE_PASSWORD=testing
+            - DATABASE_DATABASE=modelingdb
+        command:
+            - /bin/bash
+            - /app/bin/run.sh
+    db:
+        image: mysql
+        expose:
+            - 3306
+        ports:
+            - 3306:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=whatever
+            - MYSQL_USER=modeler
+            - MYSQL_PASSWORD=testing
+            - MYSQL_DATABASE=modelingdb

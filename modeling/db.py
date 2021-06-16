@@ -25,15 +25,16 @@ def close_db(exc: Exception = None) -> None:
 
 
 def init_db() -> None:
-    db = get_db()
-
     faker = Faker()
+
     rows = []
     for i in range(100):
         name = faker.name()
         age = faker.random_int(min=1, max=90)
         rows.append((name, age,))
     sql_ins = "INSERT INTO users (name, age) VALUES (%s, %s)"
+
+    db = get_db()
 
     with db.cursor() as cur:
         cur.execute("DROP TABLE IF EXISTS users")
@@ -49,6 +50,7 @@ def init_db() -> None:
 @click.command("init-db")
 @with_appcontext
 def init_db_cmd() -> None:
+    """Initialize DB from scratch."""
     init_db()
     click.echo("Recreated the database ...")
 
